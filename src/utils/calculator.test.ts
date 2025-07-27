@@ -1,7 +1,7 @@
 import { add } from './calculator';
 
 describe('String Calculator', () => {
-    it('returns sum for two comma-separated numbers', () => {
-        expect(add('1,5')).toBe(6);
+    it('returns sum for multiple numbers', () => {
+        expect(add('1,2,3,4')).toBe(10);
     });
 });
