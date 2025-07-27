@@ -1,6 +1,15 @@
 export function add(numbers: string): number {
     if (numbers === '') return 0;
-    const normalized = numbers.replace(/\n/g, ',');
-    const parts = normalized.split(',').map(Number);
-    return parts.reduce((acc, curr) => acc + curr, 0);
+
+    let delimiter = /,|\n/;
+    if (numbers.startsWith('//')) {
+        const parts = numbers.split('\n');
+        delimiter = new RegExp(parts[0].slice(2));
+        numbers = parts[1];
+    }
+
+    return numbers
+        .split(delimiter)
+        .map(Number)
+        .reduce((acc, curr) => acc + curr, 0);
 }
