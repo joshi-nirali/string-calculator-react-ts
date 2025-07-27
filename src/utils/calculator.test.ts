@@ -1,7 +1,7 @@
 import { add } from './calculator';
 
 describe('String Calculator', () => {
-    it('supports custom delimiter with //;\\n syntax', () => {
-        expect(add('//;\n1;2')).toBe(3);
+    it('throws error on negative numbers', () => {
+        expect(() => add('1,-2,3,-4')).toThrow('Negative numbers not allowed: -2,-4');
     });
 });
