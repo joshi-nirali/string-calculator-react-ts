@@ -8,8 +8,12 @@ export function add(numbers: string): number {
         numbers = parts[1];
     }
 
-    return numbers
-        .split(delimiter)
-        .map(Number)
-        .reduce((acc, curr) => acc + curr, 0);
+    const parts = numbers.split(delimiter).map(Number);
+    const negatives = parts.filter(n => n < 0);
+
+    if (negatives.length > 0) {
+        throw new Error(`Negative numbers not allowed: ${negatives.join(',')}`);
+    }
+
+    return parts.reduce((acc, curr) => acc + curr, 0);
 }
