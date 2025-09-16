@@ -25,6 +25,10 @@ describe("StringCalculator", () => {
     expect(Add("//;\n1;2")).toBe(3);
   });
 
+  test("Supports Multiplication useing single asterisk", () => {
+    expect(Add("//*\n1*2")).toBe(2);
+  });
+
   test("supports custom multi-char delimiter", () => {
     expect(Add("//[***]\n1***2***3")).toBe(6);
   });
