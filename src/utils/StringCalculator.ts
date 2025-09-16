@@ -1,4 +1,4 @@
-let calledCount = 0;
+let calledCount = 1;
 
 type AddEventHandler = (input: string, result: number | string) => void;
 let addEventCallback: AddEventHandler | null = null;
@@ -22,16 +22,17 @@ export function Add(input: string): number {
 
   let delimiters: string[] = [",", "\n"];
   let numStr = input;
+  const newlineIndex = input.indexOf("\n");
+  const delimiterDef = input.substring(2, newlineIndex);
 
   if (input.startsWith("//")) {
-    const newlineIndex = input.indexOf("\n");
+
     if (newlineIndex === -1) {
       throw new Error(
         "Invalid delimiter format: missing newline after delimiter declaration.",
       );
     }
 
-    const delimiterDef = input.substring(2, newlineIndex);
     numStr = input.substring(newlineIndex + 1);
 
     const matches = [...delimiterDef.matchAll(/\[(.+?)\]/g)].map((m) => m[1]);
@@ -67,6 +68,7 @@ export function Add(input: string): number {
 
   const negatives: string[] = [];
   let sum = 0;
+  let multiply = 1;
 
   for (const token of tokens) {
     const t = token.trim();
@@ -81,6 +83,7 @@ export function Add(input: string): number {
       negatives.push(num.toString());
     } else if (num <= 1000) {
       sum += num;
+      multiply *= num;
     }
   }
 
@@ -91,6 +94,9 @@ export function Add(input: string): number {
   if (addEventCallback) {
     addEventCallback(input, sum);
   }
-
-  return sum;
+  if (delimiterDef === "*") {
+    return multiply;
+  } else {
+    return sum;
+  }
 }
